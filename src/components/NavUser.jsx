@@ -1,7 +1,9 @@
+// eslint-disable-next-line no-unused-vars
 import React from "react"
 import Logo from "./Logo"
 import Avatar from "@mui/material/Avatar"
 import { deepOrange } from "@mui/material/colors"
+import { Link } from "react-router-dom"
 
 const NavUser = () => {
   return (
@@ -13,10 +15,23 @@ const NavUser = () => {
           </span>
         </a>
         <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-          <a className="mr-5 hover:text-gray-900">First Link</a>
-          <a className="mr-5 hover:text-gray-900">Second Link</a>
-          <a className="mr-5 hover:text-gray-900">Third Link</a>
-          <a className="mr-5 hover:text-gray-900">Fourth Link</a>
+          <Link to="/" className="mr-5 hover:text-primaryDark font-semibold">
+            Home
+          </Link>
+          <Link
+            to="/courses"
+            className="mr-5  font-semibold hover:text-primaryDark"
+          >
+            Courses
+          </Link>
+
+          {/* find tutors */}
+          <Link
+            to="/find-tutors"
+            className="mr-5  font-semibold hover:text-primaryDark"
+          >
+            Find Tutor ?
+          </Link>
         </nav>
         <div>
           <Avatar sx={{ bgcolor: deepOrange[500] }}>SK</Avatar>

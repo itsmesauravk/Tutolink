@@ -7,6 +7,8 @@ import BasicStats from "../../components/BasicStats"
 import BecomeTutor from "../../components/BecomeTutor"
 import Footer from "../../components/Footer"
 import Floating from "../../components/Floating" // Import the floating button component
+import Popular from "../../components/Popular"
+import { Link } from "react-router-dom"
 
 const UserHomepage = () => {
   return (
@@ -24,15 +26,40 @@ const UserHomepage = () => {
 
         {/* Recommended Section */}
         <section className="p-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-8">
-            Recommended For You
-          </h1>
+          <div className="flex justify-between">
+            <h1 className="text-3xl font-bold text-gray-800 mb-8">
+              Recommended For You
+            </h1>
+            <Link
+              to="/courses"
+              className="text-primary font-semibold underline"
+            >
+              View All Recommendations
+            </Link>
+          </div>
           <Recommended />
         </section>
 
         {/* Basic Details Section */}
         <section className="p-8">
           <BasicStats />
+        </section>
+
+        {/* Recommended Section */}
+        <section className="p-8">
+          <div className="flex justify-between">
+            <h1 className="text-3xl font-bold text-gray-800 mb-8">
+              Popular Courses
+            </h1>
+            <Link
+              to="/courses"
+              className="text-primary font-semibold underline"
+            >
+              View All Courses
+            </Link>
+          </div>
+
+          <Popular />
         </section>
 
         {/* Become Tutor Section */}

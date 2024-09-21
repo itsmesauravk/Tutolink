@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import React from "react"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import UserHomepage from "./pages/user/homepage"
+import UserHomepage from "./pages/user/Homepage"
 import TutorHomepage from "./pages/tutor/homepage"
 import YourChoice from "./pages/user/YourChoice"
 import Courses from "./pages/tutor/Courses"
@@ -10,6 +10,7 @@ import DemoRequests from "./pages/tutor/DemoRequests"
 import Classes from "./pages/tutor/Classes"
 import ClassesRequests from "./pages/tutor/ClassesRequests"
 import Analytics from "./pages/tutor/Analytics"
+import FindTutor from "./pages/user/FindTutor"
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         {/* user  */}
         <Route path="/" element={<UserHomepage />} />
         <Route path="/choose-you-like" element={<YourChoice />} />
+        <Route path="/find-tutors" element={<FindTutor />} />
       </Routes>
     </Router>
   )

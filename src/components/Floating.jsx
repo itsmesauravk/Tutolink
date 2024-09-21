@@ -1,11 +1,14 @@
-import React, { useState } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { BsChatFill } from "react-icons/bs"
 import { FaRobot } from "react-icons/fa"
 import { RxCross2 } from "react-icons/rx"
+import { gsap } from "gsap"
 
 const Floating = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [chatType, setChatType] = useState(null)
+  const botRef = useRef(null)
+  const agentRef = useRef(null)
 
   const toggleChat = () => {
     setIsOpen(!isOpen)
@@ -16,12 +19,33 @@ const Floating = () => {
     setIsOpen(true)
   }
 
+  useEffect(() => {
+    // Bounce animation for the chat buttons
+    const bounceAnimation = (element) => {
+      gsap.fromTo(
+        element,
+        { y: -8 },
+        {
+          y: 0,
+          repeat: -1,
+          yoyo: true,
+          duration: 2,
+          ease: "bounce.out",
+        }
+      )
+    }
+
+    if (botRef.current) bounceAnimation(botRef.current)
+    if (agentRef.current) bounceAnimation(agentRef.current)
+  }, [])
+
   return (
     <>
       {/* Floating Buttons */}
-      <div className=" fixed bottom-10 right-10 z-50 space-y-4">
+      <div className="fixed bottom-14 right-14 z-50 space-y-4">
         {/* Button to Chat with Bot */}
         <button
+          ref={botRef}
           onClick={() => startChat("bot")}
           className="bg-primary text-white p-4 rounded-full shadow-lg focus:outline-none"
         >
@@ -30,6 +54,7 @@ const Floating = () => {
 
         {/* Button to Chat with Live Agent */}
         <button
+          ref={agentRef}
           onClick={() => startChat("agent")}
           className="bg-primaryHover ml-2 text-white p-4 rounded-full shadow-lg focus:outline-none"
         >
