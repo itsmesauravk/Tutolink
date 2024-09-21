@@ -3,7 +3,6 @@ import React, { useState } from "react"
 import NavUser from "../../components/NavUser"
 import Footer from "../../components/Footer"
 import TutorCard from "../../components/TutorCard"
-import Floating from "../../components/Floating"
 
 const tagsData = [
   "Artificial Intelligence",
@@ -95,18 +94,27 @@ const FindTutor = () => {
       rating: "4.9",
       avatarUrl: "https://randomuser.me/api/portraits/women/3.jpg",
     },
+    {
+      name: "Jane Smith",
+      courses: "6",
+      rating: "4.8",
+      avatarUrl: "https://randomuser.me/api/portraits/women/2.jpg",
+    },
+    {
+      name: "Alice Johnson",
+      courses: "3",
+      rating: "4.9",
+      avatarUrl: "https://randomuser.me/api/portraits/women/3.jpg",
+    },
   ]
 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value)
   }
 
-  const handleTagChange = (event) => {
-    const value = event.target.value
+  const handleTagChange = (tag) => {
     setSelectedTags((prev) =>
-      prev.includes(value)
-        ? prev.filter((tag) => tag !== value)
-        : [...prev, value]
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
     )
   }
 
@@ -150,22 +158,26 @@ const FindTutor = () => {
         )
       case "tags":
         return (
-          <div className="flex flex-col space-y-2">
-            <select
-              multiple
-              value={selectedTags}
-              onChange={handleTagChange}
-              className="border rounded p-2 w-full mt-2"
-            >
-              {tagsData.map((tag) => (
-                <option key={tag} value={tag}>
+          <div className="mt-2 flex flex-wrap">
+            {tagsData.map((tag) => (
+              <label key={tag} className="mr-2 mb-2">
+                {" "}
+                {/* Added mb-2 for gap between tags */}
+                <input
+                  type="checkbox"
+                  value={tag}
+                  checked={selectedTags.includes(tag)}
+                  onChange={() => handleTagChange(tag)}
+                  className="mr-1"
+                />
+                <span className="border rounded p-2 cursor-pointer transition duration-200 ease-in-out hover:bg-primary hover:text-white">
                   {tag}
-                </option>
-              ))}
-            </select>
+                </span>
+              </label>
+            ))}
             <button
               onClick={handleSearchSubmit}
-              className="bg-primary text-white rounded px-4"
+              className="bg-primary text-white rounded px-4 mt-2"
             >
               Search
             </button>
@@ -200,7 +212,9 @@ const FindTutor = () => {
       <div className="max-w-screen-xl mx-auto px-4 md:px-8 py-28">
         {/* Search Method Selector */}
         <div className="mb-6">
-          <h2 className="text-2xl font-bold">Find a Tutor</h2>
+          <h2 className="text-3xl font-bold mt-8 mb-8 text-primaryDark">
+            Find a Tutor
+          </h2>
           <div className="flex space-x-4 mb-4">
             <button
               className={`px-4 py-2 rounded ${
@@ -257,11 +271,11 @@ const FindTutor = () => {
         </div>
 
         {/* Recommendations Section */}
-        <div className="mb-6">
+        <div className="flex justify-between mb-6">
           <h2 className="text-xl font-semibold">
             Recommended Based on Your Interest
           </h2>
-          <button className="text-blue-600 hover:underline">View All</button>
+          <button className="text-primaryDark hover:underline">View All</button>
         </div>
 
         {/* Render Recommended Tutors */}
@@ -279,7 +293,6 @@ const FindTutor = () => {
       </div>
 
       <Footer />
-      <Floating />
     </div>
   )
 }

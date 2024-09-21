@@ -34,7 +34,9 @@ const NavUser = () => {
           </Link>
         </nav>
         <div>
-          <Avatar sx={{ bgcolor: deepOrange[500] }}>SK</Avatar>
+          <Link to={"/my-account/dashboard"}>
+            <Avatar sx={{ bgcolor: deepOrange[500] }}>SK</Avatar>
+          </Link>
         </div>
       </div>
     </header>
