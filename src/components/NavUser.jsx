@@ -15,7 +15,10 @@ const NavUser = () => {
           </span>
         </a>
         <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-          <Link to="/" className="mr-5 hover:text-primaryDark font-semibold">
+          <Link
+            to="/home"
+            className="mr-5 hover:text-primaryDark font-semibold"
+          >
             Home
           </Link>
           <Link

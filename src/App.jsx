@@ -13,11 +13,18 @@ import Analytics from "./pages/tutor/Analytics"
 import FindTutor from "./pages/user/FindTutor"
 import ViewCourses from "./pages/user/ViewCourses"
 import MyAccount from "./pages/user/MyAccount"
+import Login from "./pages/Login"
+import Register from "./pages/Register"
+import Landing from "./pages/Landing"
 
 function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+
         {/* tutor  */}
         <Route path="/tutor/dashboard" element={<TutorHomepage />} />
         <Route path="/tutor/courses" element={<Courses />} />
@@ -28,7 +35,7 @@ function App() {
         <Route path="/tutor/analytics" element={<Analytics />} />
 
         {/* user  */}
-        <Route path="/" element={<UserHomepage />} />
+        <Route path="/home" element={<UserHomepage />} />
         <Route path="/choose-you-like" element={<YourChoice />} />
         <Route path="/find-tutors" element={<FindTutor />} />
         <Route path="/courses" element={<ViewCourses />} />

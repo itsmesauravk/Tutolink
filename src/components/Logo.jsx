@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 
 const Logo = () => {
   return (
-    <Link to={"/"} className="flex items-center space-x-2">
+    <Link to={"/home"} className="flex items-center space-x-2">
       <span className="font-bold text-2xl text-primaryDark">TutoLink</span>
       <SiSololearn className="w-6 h-6 text-primaryDark" />
     </Link>
