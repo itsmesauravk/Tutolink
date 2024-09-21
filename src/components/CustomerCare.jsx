@@ -1,15 +1,15 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect, useRef } from "react"
 import axios from "axios" // Import Axios
-import { FaRobot } from "react-icons/fa"
+import { BsChatFill } from "react-icons/bs"
 import { RxCross2 } from "react-icons/rx"
 import { gsap } from "gsap"
 
-const Floating = () => {
+const CustomerCare = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState([])
   const [inputMessage, setInputMessage] = useState("")
-  const botRef = useRef(null)
+  const agentRef = useRef(null)
 
   const toggleChat = () => {
     setIsOpen(!isOpen)
@@ -22,12 +22,18 @@ const Floating = () => {
     setMessages((prev) => [...prev, { sender: "user", content: inputMessage }])
 
     try {
-      const response = await axios.post("http://localhost:8000/api/chat/", {
-        message: inputMessage,
-      })
+      const response = await axios.post(
+        "http://localhost:8000/api/live-agent/",
+        {
+          message: inputMessage,
+        }
+      )
       setMessages((prev) => [
         ...prev,
-        { sender: "bot", content: formatBotResponse(response.data.message) },
+        {
+          sender: "agent",
+          content: formatAgentResponse(response.data.message),
+        },
       ])
     } catch (error) {
       console.error("Error sending message:", error)
@@ -36,8 +42,7 @@ const Floating = () => {
     }
   }
 
-  const formatBotResponse = (response) => {
-    // Format the response to add HTML for bold and line breaks
+  const formatAgentResponse = (response) => {
     return response
       .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
       .replace(/\n/g, "<br />")
@@ -58,18 +63,18 @@ const Floating = () => {
       )
     }
 
-    if (botRef.current) bounceAnimation(botRef.current)
+    if (agentRef.current) bounceAnimation(agentRef.current)
   }, [])
 
   return (
     <>
-      <div className="fixed bottom-14 right-32 z-50">
+      <div className="fixed bottom-14 right-14 z-50">
         <button
-          ref={botRef}
+          ref={agentRef}
           onClick={toggleChat}
-          className="bg-primary text-white p-4 rounded-full shadow-lg focus:outline-none"
+          className="bg-primaryHover text-white p-4 rounded-full shadow-lg focus:outline-none"
         >
-          <FaRobot className="w-6 h-6" />
+          <BsChatFill className="w-6 h-6" />
         </button>
       </div>
 
@@ -77,7 +82,7 @@ const Floating = () => {
         <div className="fixed bottom-28 right-8 w-[40rem] h-[40rem] bg-white rounded-lg shadow-lg p-4 z-50">
           <div className="flex flex-col h-full">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-semibold">Chatbot</h2>
+              <h2 className="text-xl font-semibold">Live Agent Chat</h2>
               <RxCross2
                 onClick={toggleChat}
                 className="w-5 h-5 text-red-500 focus:outline-none cursor-pointer"
@@ -89,7 +94,7 @@ const Floating = () => {
                 <p
                   key={index}
                   className={`mb-2 ${
-                    msg.sender === "bot" ? "text-blue-500" : "text-black"
+                    msg.sender === "agent" ? "text-green-500" : "text-black"
                   }`}
                   dangerouslySetInnerHTML={{ __html: msg.content }}
                 />
@@ -118,4 +123,4 @@ const Floating = () => {
   )
 }
 
-export default Floating
+export default CustomerCare

@@ -9,6 +9,7 @@ import Footer from "../../components/Footer"
 import Floating from "../../components/Floating" // Import the floating button component
 import Popular from "../../components/Popular"
 import { Link } from "react-router-dom"
+import CustomerCare from "../../components/CustomerCare"
 
 const UserHomepage = () => {
   return (
@@ -72,6 +73,7 @@ const UserHomepage = () => {
       </main>
       {/* Floating Chat Button */}
       <Floating />
+      <CustomerCare />
     </div>
   )
 }
