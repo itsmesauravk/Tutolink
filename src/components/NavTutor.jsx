@@ -4,6 +4,7 @@ import Logo from "./Logo"
 import Avatar from "@mui/material/Avatar"
 import { deepOrange } from "@mui/material/colors"
 import { Link } from "react-router-dom"
+import Badge from "@mui/material/Badge"
 
 const NavTutor = () => {
   return (
@@ -15,14 +16,53 @@ const NavTutor = () => {
           </span>
         </a>
         <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-          <Link to="/tutor/dashboard" className="mr-5 hover:text-gray-900">
+          <Link
+            to="/tutor/dashboard"
+            className="mr-5 hover:text-gray-900 font-semibold"
+          >
             Dashboard{" "}
           </Link>
-          <Link to="/tutor/courses" className="mr-5 hover:text-gray-900">
+          <Link
+            to="/tutor/courses"
+            className="mr-5 hover:text-gray-900 font-semibold"
+          >
             Courses{" "}
           </Link>
-          <Link to="/tutor/add-course" className="mr-5 hover:text-gray-900">
+          <Link
+            to="/tutor/add-course"
+            className="mr-5 hover:text-gray-900 font-semibold"
+          >
             Add Course{" "}
+          </Link>
+          <Link
+            to="/tutor/demo-requests"
+            className="mr-5 hover:text-gray-900 font-semibold"
+          >
+            <Badge badgeContent={4} color="secondary">
+              Demo Requests{" "}
+            </Badge>
+          </Link>
+          <Link
+            to="/tutor/classes"
+            className="mr-5 hover:text-gray-900 font-semibold"
+          >
+            <Badge badgeContent={2} color="primary">
+              Classes{" "}
+            </Badge>
+          </Link>
+          <Link
+            to="/tutor/classes-requests"
+            className="mr-5 hover:text-gray-900 font-semibold"
+          >
+            <Badge badgeContent={1} color="success">
+              Classes Requests{" "}
+            </Badge>
+          </Link>
+          <Link
+            to="/tutor/analytics"
+            className="mr-5 hover:text-gray-900 font-semibold"
+          >
+            Analytics{" "}
           </Link>
         </nav>
         <div>
