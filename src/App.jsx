@@ -16,6 +16,7 @@ import MyAccount from "./pages/user/MyAccount"
 import Login from "./pages/Login"
 import Register from "./pages/Register"
 import Landing from "./pages/Landing"
+import WatchVideo from "./pages/user/WatchVideo"
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
         <Route path="/find-tutors" element={<FindTutor />} />
         <Route path="/courses" element={<ViewCourses />} />
         <Route path="/my-account/dashboard" element={<MyAccount />} />
+        <Route path="/watch-video" element={<WatchVideo />} />
       </Routes>
     </Router>
   )

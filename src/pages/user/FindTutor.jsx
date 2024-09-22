@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import NavUser from "../../components/NavUser"
 import Footer from "../../components/Footer"
 import TutorCard from "../../components/TutorCard"
@@ -73,40 +73,9 @@ const FindTutor = () => {
   const [searchQuery, setSearchQuery] = useState("")
   const [searchMethod, setSearchMethod] = useState("name") // Default search method
   const [selectedTags, setSelectedTags] = useState([])
-
-  // Dummy data for recommendations
-  const recommendations = [
-    {
-      name: "John Doe",
-      courses: "4",
-      rating: "5.0",
-      avatarUrl: "https://randomuser.me/api/portraits/men/1.jpg",
-    },
-    {
-      name: "Jane Smith",
-      courses: "6",
-      rating: "4.8",
-      avatarUrl: "https://randomuser.me/api/portraits/women/2.jpg",
-    },
-    {
-      name: "Alice Johnson",
-      courses: "3",
-      rating: "4.9",
-      avatarUrl: "https://randomuser.me/api/portraits/women/3.jpg",
-    },
-    {
-      name: "Jane Smith",
-      courses: "6",
-      rating: "4.8",
-      avatarUrl: "https://randomuser.me/api/portraits/women/2.jpg",
-    },
-    {
-      name: "Alice Johnson",
-      courses: "3",
-      rating: "4.9",
-      avatarUrl: "https://randomuser.me/api/portraits/women/3.jpg",
-    },
-  ]
+  const [recommendations, setRecommendations] = useState([]) // To store fetched recommendations
+  const [loading, setLoading] = useState(false) // Loading state for API request
+  const [error, setError] = useState(null) // To handle API errors
 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value)
@@ -118,23 +87,58 @@ const FindTutor = () => {
     )
   }
 
-  const handleSearchSubmit = () => {
+  const handleSearchSubmit = async () => {
     let searchData
-    switch (searchMethod) {
-      case "name":
-        searchData = { method: "name", query: searchQuery }
-        break
-      case "tags":
-        searchData = { method: "tags", selectedTags }
-        break
-      case "query":
-        searchData = { method: "query", query: searchQuery }
-        break
-      default:
-        return
+
+    const studentTags =
+      selectedTags.length > 0
+        ? selectedTags.join(", ")
+        : "Python, Data Analysis" // Default tags
+    const studentDescription =
+      searchQuery || "I want to learn about mobile app developer." // Default description
+
+    searchData = {
+      student_tags: studentTags,
+      student_description: studentDescription,
     }
+
     console.log("Search Data:", searchData)
+
+    // API call to backend
+    try {
+      setLoading(true)
+      setError(null)
+
+      const response = await fetch(
+        "http://localhost:8000/api/recommend-tutors/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(searchData),
+        }
+      )
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch recommendations.")
+      }
+
+      const result = await response.json()
+      console.log("Recommendations:", result)
+
+      // Update recommendations based on the API response
+      setRecommendations(result)
+    } catch (error) {
+      setError(error.message)
+    } finally {
+      setLoading(false)
+    }
   }
+
+  useEffect(() => {
+    handleSearchSubmit()
+  }, [])
 
   const renderSearchInput = () => {
     switch (searchMethod) {
@@ -161,8 +165,6 @@ const FindTutor = () => {
           <div className="mt-2 flex flex-wrap">
             {tagsData.map((tag) => (
               <label key={tag} className="mr-2 mb-2">
-                {" "}
-                {/* Added mb-2 for gap between tags */}
                 <input
                   type="checkbox"
                   value={tag}
@@ -265,9 +267,27 @@ const FindTutor = () => {
         {/* Search Results Section */}
         <div className="mt-8 mb-8">
           <h2 className="text-xl font-semibold">Search Results</h2>
-          <p className="text-gray-500">
-            Results based on your search will appear here.
-          </p>
+          {loading ? (
+            <p>Loading...</p>
+          ) : error ? (
+            <p className="text-red-500">{error}</p>
+          ) : recommendations.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {recommendations.map((tutor, index) => (
+                <TutorCard
+                  key={index}
+                  name={tutor.name}
+                  courses={tutor.courses}
+                  rating={tutor.rating}
+                  avatarUrl={tutor.avatarUrl}
+                />
+              ))}
+            </div>
+          ) : (
+            <p className="text-gray-500">
+              No results found based on your search.
+            </p>
+          )}
         </div>
 
         {/* Recommendations Section */}
